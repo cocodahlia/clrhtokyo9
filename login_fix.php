@@ -14,16 +14,17 @@
 
     $db = new mysqli($servername, $username, $password, $database, $dbport);
     $db->set_charset('utf8');
-    //BAD
-    $query = "SELECT * FROM muse.members WHERE name ='$id' and password = '$passwd'";
-    $result = $db->query($query);
 
+    $statement = $db->prepare("SELECT * FROM muse.members WHERE name = ? and password = ?");
+    $statement -> bind_param('ss',$id,$passwd);
+    $statement->execute();
+    $statement->bind_result($id,$passwd);
 
 ?>
 <html><body>
 <?php
-
-    if(empty($result->fetch_assoc())){
+    var_dump($statement->fetch());
+    if(empty($statement->fetch())){
         echo "login failed.";
     }else{
         echo "Welcome ". $id ."!"; 
