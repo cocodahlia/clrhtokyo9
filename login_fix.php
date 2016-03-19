@@ -23,7 +23,7 @@
 ?>
 <html><body>
 <?php
-    var_dump($statement->fetch());
+
     if(empty($statement->fetch())){
         echo "login failed.";
     }else{
